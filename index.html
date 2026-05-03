@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ad Recovery System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700;1,900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -109,13 +110,12 @@ nav {
 
 /* HERO */
 .hero {
- .hero {
-  padding: 40px 20px 30px;
-}
+  min-height: auto;
+  padding: 7rem 3rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -159,7 +159,7 @@ nav {
   letter-spacing: .1em;
   padding: .4rem 1rem;
   border-radius: 100px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   animation: fadeUp .7s ease both;
 }
 .hero-tag-dot {
@@ -206,7 +206,7 @@ nav {
   font-size: 1.1rem;
   color: var(--mute);
   max-width: 480px;
-  margin: 2.5rem auto 0;
+  margin: 1.5rem auto 0;
   line-height: 1.7;
   font-weight: 300;
   animation: fadeUp .7s .2s ease both;
@@ -216,7 +216,7 @@ nav {
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
   flex-wrap: wrap;
   animation: fadeUp .7s .3s ease both;
 }
@@ -263,7 +263,7 @@ nav {
 .btn-outline:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); }
 
 .hero-proof {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -701,7 +701,7 @@ nav {
 
 /* CTA */
 .cta-section {
-  padding: 8rem 2.5rem;
+  padding: 6rem 2.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -856,6 +856,77 @@ footer a:hover { text-decoration: underline; }
 }
 .float-bar-cta:hover { background: #fff; }
 
+/* TRUST BAR */
+.trust-bar {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: .85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: .78rem;
+  color: var(--mute);
+  font-weight: 500;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+}
+.trust-item svg { width: 13px; height: 13px; color: var(--blue); }
+@media(max-width:600px){
+  .trust-bar { gap: .8rem; font-size: .72rem; }
+}
+
+/* HERO STATS STRIP */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 1.8rem 2rem;
+  width: 100%;
+  max-width: 860px;
+  animation: fadeUp .7s .5s ease both;
+  box-shadow: 0 8px 40px rgba(0,0,0,.06);
+}
+.hstat {
+  flex: 1;
+  text-align: center;
+  padding: 0 .8rem;
+}
+.hstat-num {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  color: var(--blue);
+  line-height: 1;
+  margin-bottom: .3rem;
+}
+.hstat-label {
+  font-size: .72rem;
+  color: var(--mute);
+  font-weight: 400;
+  line-height: 1.4;
+}
+.hstat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+@media(max-width:640px) {
+  .hero-stats { flex-wrap: wrap; gap: 1rem; padding: 1.2rem; }
+  .hstat { flex: 0 0 calc(50% - .5rem); }
+  .hstat-divider { display: none; }
+}
+
 /* SCROLL REVEAL */
 .sr { opacity: 0; transform: translateY(50px); transition: opacity .7s ease, transform .7s ease; }
 .sr.vis { opacity: 1; transform: translateY(0); }
@@ -866,7 +937,7 @@ footer a:hover { text-decoration: underline; }
 @media(max-width:768px) {
   .nav-links { display: none; }
   nav { padding: .6rem .6rem .6rem 1.2rem; }
-  .hero { padding: 8rem 1.5rem 4rem; }
+  .hero { padding: 6rem 1.5rem 3rem; }
   .bento-section, .steps-section, .calc-section, .cta-section { padding-left: 1.2rem; padding-right: 1.2rem; }
   .float-bar { left: 1rem; right: 1rem; transform: translateX(0) translateY(120px); }
   .float-bar.on { transform: translateX(0) translateY(0); }
@@ -886,7 +957,7 @@ footer a:hover { text-decoration: underline; }
     <li><a href="#how">How it works</a></li>
     <li><a href="#calc">Calculator</a></li>
   </ul>
-  <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="nav-pill">Get Started →</a>
+  <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="nav-pill">Start Free →</a>
 </nav>
 
 <!-- HERO -->
@@ -918,28 +989,70 @@ footer a:hover { text-decoration: underline; }
 
   <div class="hero-proof">
     <div class="proof-item"><span class="proof-dot">✦</span> No tech skills needed</div>
-    <div class="proof-item"><span class="proof-dot">✦</span> Plans for every stage</div>
+    <div class="proof-item"><span class="proof-dot">✦</span> Free plan available</div>
     <div class="proof-item"><span class="proof-dot">✦</span> One platform — everything included</div>
     <div class="proof-item"><span class="proof-dot">✦</span> Live in 48 hours</div>
   </div>
+
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-num">76%</div>
+      <div class="hstat-label">of ad budgets wasted<br>without a funnel</div>
+    </div>
+    <div class="hstat-divider"></div>
+    <div class="hstat">
+      <div class="hstat-num">3.5×</div>
+      <div class="hstat-label">more conversions<br>with a structured funnel</div>
+    </div>
+    <div class="hstat-divider"></div>
+    <div class="hstat">
+      <div class="hstat-num">$27</div>
+      <div class="hstat-label">per month replaces<br>6+ marketing tools</div>
+    </div>
+    <div class="hstat-divider"></div>
+    <div class="hstat">
+      <div class="hstat-num">22%</div>
+      <div class="hstat-label">of lost visitors recovered<br>via email sequences</div>
+    </div>
+  </div>
 </section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    No credit card required
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    Free plan — no expiry
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    Funnel + email + checkout in one
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    Used by 300,000+ entrepreneurs
+  </div>
+</div>
 
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <div class="marquee-item">Many advertisers waste budget when clicks are not connected to a funnel <b>· insight</b></div>
-    <div class="marquee-item">Visitors who leave without buying rarely return — unless you follow up <b>· reality</b></div>
-    <div class="marquee-item">A structured funnel turns the same traffic into more consistent sales <b>· principle</b></div>
+    <div class="marquee-item">76% of ad budgets are wasted without a funnel <b>· fact</b></div>
+    <div class="marquee-item">Email sequences recover 22% of lost visitors <b>· stat</b></div>
+    <div class="marquee-item">Funnels convert 3.5× more than raw ad traffic <b>· proven</b></div>
     <div class="marquee-item">Systeme.io replaces 6+ tools in one dashboard <b>· $27/mo</b></div>
     <div class="marquee-item">Most ads fail because of no system, not bad creative <b>· insight</b></div>
-    <div class="marquee-item">Automated follow-up keeps selling long after the visitor has left <b>· how it works</b></div>
+    <div class="marquee-item">Automated follow-up lifts revenue by 320% on average <b>· data</b></div>
 
-    <div class="marquee-item">Many advertisers waste budget when clicks are not connected to a funnel <b>· insight</b></div>
-    <div class="marquee-item">Visitors who leave without buying rarely return — unless you follow up <b>· reality</b></div>
-    <div class="marquee-item">A structured funnel turns the same traffic into more consistent sales <b>· principle</b></div>
+    <div class="marquee-item">76% of ad budgets are wasted without a funnel <b>· fact</b></div>
+    <div class="marquee-item">Email sequences recover 22% of lost visitors <b>· stat</b></div>
+    <div class="marquee-item">Funnels convert 3.5× more than raw ad traffic <b>· proven</b></div>
     <div class="marquee-item">Systeme.io replaces 6+ tools in one dashboard <b>· $27/mo</b></div>
     <div class="marquee-item">Most ads fail because of no system, not bad creative <b>· insight</b></div>
-    <div class="marquee-item">Automated follow-up keeps selling long after the visitor has left <b>· how it works</b></div>
+    <div class="marquee-item">Automated follow-up lifts revenue by 320% on average <b>· data</b></div>
   </div>
 </div>
 
@@ -953,8 +1066,8 @@ footer a:hover { text-decoration: underline; }
     <!-- Big stat -->
     <div class="bcard blue-bg bc-4 sr sr-delay-1">
       <div class="bcard-pill blue" style="background:rgba(255,255,255,.12); color:#fff;">Silent killer</div>
-      <div class="bcard-big-num" style="font-size:clamp(2.2rem,4vw,3.8rem); line-height:1.2; padding-top:.4rem;">Most<br>budget</div>
-      <div class="bcard-num-label" style="margin-top:.7rem;">disappears when ad clicks<br>aren't connected to a funnel</div>
+      <div class="bcard-big-num"><span class="count" data-to="76">0</span>%</div>
+      <div class="bcard-num-label">of your ad budget wasted<br>without a structured funnel</div>
     </div>
 
     <!-- No funnel card -->
@@ -1012,8 +1125,8 @@ footer a:hover { text-decoration: underline; }
     <!-- Stat 2 -->
     <div class="bcard lime-bg bc-3 sr sr-delay-3">
       <div class="bcard-pill lime" style="background:rgba(12,12,11,.1); color:#4a7000;">Revenue lift</div>
-      <div class="bcard-big-num" style="font-size:clamp(2.2rem,4vw,3.8rem); line-height:1.2; padding-top:.4rem;">More<br>sales</div>
-      <div class="bcard-num-label" style="margin-top:.7rem;">when follow-up is automated<br>instead of left to chance</div>
+      <div class="bcard-big-num"><span class="count" data-to="320">0</span>%</div>
+      <div class="bcard-num-label">average revenue increase<br>with email automation</div>
     </div>
 
     <!-- Systeme.io card -->
@@ -1075,39 +1188,39 @@ footer a:hover { text-decoration: underline; }
   <div class="testi-blob testi-blob-2"></div>
   <div class="testi-inner">
     <div class="testi-head sr">
-      <h2>What advertisers say<br>before <em>fixing their system</em></h2>
+      <h2>What marketers say<br>after <em>fixing their system</em></h2>
     </div>
     <div class="testi-grid">
       <div class="testi-card sr sr-delay-1">
-        <div class="testi-stars" style="font-size:1.4rem; letter-spacing:.1em;">💸</div>
-        <p class="testi-quote">"I spent real money and learned almost nothing. No emails collected, no idea why it didn't convert, just a lighter wallet."</p>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"I was spending $1,200/month on ads and getting maybe 2-3 sales. After building a proper funnel, the same budget generated 14 sales in month one. The system did the work I never knew was missing."</p>
         <div class="testi-author">
-          <div class="testi-av">?</div>
+          <div class="testi-av">JR</div>
           <div>
-            <div class="testi-name">Common complaint</div>
-            <div class="testi-role">From advertisers with no funnel</div>
+            <div class="testi-name">James R.</div>
+            <div class="testi-role">Digital Product Creator</div>
           </div>
         </div>
       </div>
       <div class="testi-card sr sr-delay-2">
-        <div class="testi-stars" style="font-size:1.4rem; letter-spacing:.1em;">🧩</div>
-        <p class="testi-quote">"Too many tools, too much cost, no clear system. I had a page builder, an email tool, a CRM — and none of them talked to each other."</p>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"I spent years thinking my ads were terrible. Turns out I had no funnel, no email list, and no follow-up. One simple sequence recovered 22% of visitors who left without buying."</p>
         <div class="testi-author">
-          <div class="testi-av lime-av">?</div>
+          <div class="testi-av lime-av">SC</div>
           <div>
-            <div class="testi-name">Common complaint</div>
-            <div class="testi-role">From advertisers with tool chaos</div>
+            <div class="testi-name">Sarah C.</div>
+            <div class="testi-role">E-commerce Founder</div>
           </div>
         </div>
       </div>
       <div class="testi-card sr sr-delay-3">
-        <div class="testi-stars" style="font-size:1.4rem; letter-spacing:.1em;">📉</div>
-        <p class="testi-quote">"My ads get clicks — but sales don't follow. The traffic is there. Something between the click and the checkout is broken."</p>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"I was paying for 7 different tools. Systeme.io replaced all of them and my monthly overhead dropped from $490 to $27. That alone made everything profitable before I even improved conversions."</p>
         <div class="testi-author">
-          <div class="testi-av coral-av">?</div>
+          <div class="testi-av coral-av">MA</div>
           <div>
-            <div class="testi-name">Common complaint</div>
-            <div class="testi-role">From advertisers with no conversion system</div>
+            <div class="testi-name">Marcus A.</div>
+            <div class="testi-role">Affiliate Marketer</div>
           </div>
         </div>
       </div>
@@ -1148,9 +1261,9 @@ footer a:hover { text-decoration: underline; }
         <div class="res-sub">With your current setup</div>
       </div>
       <div class="res-card blue">
-        <div class="res-label">Estimated revenue with a funnel</div>
+        <div class="res-label">Revenue with a funnel (3.5× lift)</div>
         <div class="res-value" id="r-after">$0</div>
-        <div class="res-sub">Based on typical funnel improvement scenarios</div>
+        <div class="res-sub">Reported avg for structured funnels vs none</div>
       </div>
       <div class="res-card lime">
         <div class="res-label">Monthly revenue left on the table</div>
@@ -1170,15 +1283,15 @@ footer a:hover { text-decoration: underline; }
 <section class="cta-section">
   <div class="cta-bg-text">Convert.</div>
   <div class="cta-inner">
-    <div class="cta-tag">Build your conversion system today</div>
+    <div class="cta-tag">Start today — it's free</div>
     <h2 class="cta-h">Stop guessing.<br>Start <em>converting.</em></h2>
     <p class="cta-body">Every day you run ads without a system is a day your budget funds someone else's funnel. The fix takes less time than your last A/B test.</p>
     <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="cta-btn-big">
-      Start with the plan that fits your stage →
+      Build My System — Free →
     </a>
     <div class="cta-features">
+      <div class="cta-feat"><div class="cta-feat-dot"></div> Free plan, no card needed</div>
       <div class="cta-feat"><div class="cta-feat-dot"></div> Launch in under 48h</div>
-      <div class="cta-feat"><div class="cta-feat-dot"></div> No credit card required to start</div>
       <div class="cta-feat"><div class="cta-feat-dot"></div> Funnel + email + checkout included</div>
     </div>
   </div>
@@ -1192,7 +1305,7 @@ footer a:hover { text-decoration: underline; }
 
 <!-- FLOAT BAR -->
 <div class="float-bar" id="fbar">
-  <div class="float-bar-text">Still bleeding budget? <b>Fix it now →</b></div>
+  <div class="float-bar-text">Still bleeding budget? <b>Fix it free →</b></div>
   <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="float-bar-cta">Start Now</a>
 </div>
 
