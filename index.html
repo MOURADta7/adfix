@@ -1,254 +1,1427 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ad Recovery System</title>
-
+<title>Ad Recovery System — Stop Bleeding Ad Money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+  :root {
+    --bg: #080a0e;
+    --surface: #0f1219;
+    --surface2: #161b26;
+    --border: rgba(255,255,255,0.07);
+    --green: #00ff87;
+    --green-dim: #00c96a;
+    --orange: #ff6b2b;
+    --red: #ff3b3b;
+    --text: #f0f2f8;
+    --muted: #6b7a99;
+    --accent: #00ff87;
+  }
 
-body{
-  font-family:Inter,Arial;
-  background:#0b1220;
-  color:#f1f5f9;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
+  html { scroll-behavior: smooth; }
 
-/* HEADER */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 0;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-.logo{
-  font-weight:bold;
-  font-size:20px;
-}
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
 
-.nav a{
-  color:#94a3b8;
-  margin-left:20px;
-  text-decoration:none;
-}
+  /* ── GRID BACKGROUND ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,135,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,135,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:80px 0;
-}
+  section, nav, footer { position: relative; z-index: 1; }
 
-.hero h1{
-  font-size:48px;
-  line-height:1.1;
-  margin-bottom:20px;
-}
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8,10,14,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
 
-.hero p{
-  color:#94a3b8;
-  font-size:20px;
-  margin-bottom:30px;
-}
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-.cta{
-  background:#22c55e;
-  color:black;
-  padding:16px 28px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
-}
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
 
-/* SECTION */
-.section{
-  padding:60px 0;
-}
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
 
-.section h2{
-  font-size:32px;
-  margin-bottom:20px;
-}
+  .nav-cta {
+    background: var(--green);
+    color: #000;
+    border: none;
+    padding: 0.55rem 1.4rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
+  .nav-cta:hover {
+    background: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(0,255,135,0.3);
+  }
 
-.card{
-  background:#111827;
-  padding:20px;
-  border-radius:12px;
-}
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+  }
 
-/* TESTIMONIAL */
-.testimonial{
-  background:#111827;
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:20px;
-}
+  .hero-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,255,135,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-/* COMPARISON */
-.compare{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,255,135,0.08);
+    border: 1px solid rgba(0,255,135,0.2);
+    border-radius: 100px;
+    padding: 0.4rem 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--green);
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.8s ease both;
+  }
 
-.bad{background:#3f1d1d}
-.good{background:#052e16}
+  .badge-blink {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: blink 1.2s infinite;
+  }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  color:#64748b;
-  padding:40px 0;
-}
+  @keyframes blink {
+    0%, 100% { opacity: 1; } 50% { opacity: 0; }
+  }
 
-/* MOBILE */
-@media(max-width:768px){
-  .grid{grid-template-columns:1fr}
-  .compare{grid-template-columns:1fr}
-  .hero h1{font-size:34px}
-}
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    animation: fadeInUp 0.8s 0.1s ease both;
+  }
+
+  .hero h1 .highlight {
+    position: relative;
+    color: var(--green);
+    display: inline-block;
+  }
+
+  .hero h1 .strike {
+    color: var(--red);
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 1.8rem auto 0;
+    line-height: 1.7;
+    animation: fadeInUp 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    animation: fadeInUp 0.8s 0.3s ease both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: #000;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 1rem 2.4rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 50px rgba(0,255,135,0.4);
+  }
+
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--text); }
+
+  .hero-trust {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    animation: fadeInUp 0.8s 0.4s ease both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .trust-icon { color: var(--green); font-size: 1rem; }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0.8rem 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ticker {
+    display: flex;
+    gap: 3rem;
+    animation: ticker 25s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .ticker-item span { color: var(--green); font-weight: 600; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .stat-card:first-child { border-radius: 12px 0 0 12px; }
+  .stat-card:last-child { border-radius: 0 12px 12px 0; }
+
+  .stat-card:hover { border-color: rgba(0,255,135,0.25); }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .stat-card:hover::before { opacity: 1; }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: rgba(255,59,59,0.1);
+    border: 1px solid rgba(255,59,59,0.25);
+    color: var(--red);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-label.green {
+    background: rgba(0,255,135,0.08);
+    border-color: rgba(0,255,135,0.2);
+    color: var(--green);
+  }
+
+  .section-label.orange {
+    background: rgba(255,107,43,0.1);
+    border-color: rgba(255,107,43,0.25);
+    color: var(--orange);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .problem-card:hover {
+    border-color: rgba(255,59,59,0.3);
+    transform: translateY(-4px);
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+  }
+
+  .problem-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .problem-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    color: var(--text);
+  }
+
+  .problem-card p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .problem-cost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,59,59,0.1);
+    color: var(--red);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    margin-top: 1rem;
+  }
+
+  /* ── BEFORE / AFTER ── */
+  .compare-section {
+    padding: 6rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    margin-top: 3.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-divider { display: none; }
+  }
+
+  .compare-col {
+    background: var(--surface2);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .compare-head {
+    padding: 1.2rem 1.8rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .compare-head.before {
+    background: rgba(255,59,59,0.1);
+    color: var(--red);
+    border-bottom: 1px solid rgba(255,59,59,0.15);
+  }
+
+  .compare-head.after {
+    background: rgba(0,255,135,0.08);
+    color: var(--green);
+    border-bottom: 1px solid rgba(0,255,135,0.15);
+  }
+
+  .compare-list {
+    list-style: none;
+    padding: 1.5rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .compare-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .compare-list li .icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 0.85rem;
+  }
+
+  .compare-list.after li { color: var(--text); }
+
+  .compare-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5rem;
+  }
+
+  .vs-badge {
+    width: 48px; height: 48px;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 3.5rem;
+    counter-reset: step;
+  }
+
+  .step-card {
+    position: relative;
+    counter-increment: step;
+    padding: 2.5rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s;
+  }
+
+  .step-card::before {
+    content: counter(step);
+    position: absolute;
+    top: 2rem; right: 2rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 4rem;
+    color: rgba(0,255,135,0.06);
+    line-height: 1;
+  }
+
+  .step-card:hover {
+    border-color: rgba(0,255,135,0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .step-num::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--green);
+  }
+
+  .step-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  .step-card p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section {
+    padding: 6rem 2rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,255,135,0.02) 50%, transparent 100%);
+  }
+
+  .testimonials-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .testimonial-card:hover {
+    border-color: rgba(0,255,135,0.2);
+    transform: translateY(-4px);
+  }
+
+  .testimonial-card .quote-mark {
+    font-family: Georgia, serif;
+    font-size: 4rem;
+    line-height: 1;
+    color: rgba(0,255,135,0.2);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--green);
+    border: 1px solid rgba(0,255,135,0.2);
+    flex-shrink: 0;
+  }
+
+  .author-info .name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .author-info .role {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .stars {
+    color: #fbbf24;
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ROI CALCULATOR ── */
+  .calculator-section {
+    padding: 6rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .calculator-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .calc-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .calc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 600px) { .calc-row { grid-template-columns: 1fr; } }
+
+  .calc-field label {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.6rem;
+  }
+
+  .calc-field input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 1.1rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    padding: 0.8rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .calc-field input:focus { border-color: rgba(0,255,135,0.4); }
+
+  .calc-result {
+    background: rgba(0,255,135,0.06);
+    border: 1px solid rgba(0,255,135,0.15);
+    border-radius: 12px;
+    padding: 1.8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .result-item .result-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .result-item .result-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -0.03em;
+  }
+
+  .result-item .result-value.loss { color: var(--red); }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 8rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(0,255,135,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-section p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    background: var(--green);
+    color: #000;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1.1rem 3rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  .cta-btn:hover::before { left: 100%; }
+
+  .cta-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,255,135,0.5);
+  }
+
+  .cta-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-note span { display: flex; align-items: center; gap: 0.3rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  footer a { color: var(--muted); text-decoration: underline; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── FLOATING BAR ── */
+  .float-bar {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(15,18,25,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0,255,135,0.2);
+    border-radius: 100px;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    z-index: 99;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  .float-bar.visible { transform: translateX(-50%) translateY(0); }
+
+  .float-bar-text { font-size: 0.9rem; color: var(--text); }
+  .float-bar-text strong { color: var(--green); }
+
+  .float-bar-btn {
+    background: var(--green);
+    color: #000;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .float-bar-btn:hover { background: #fff; transform: scale(1.05); }
+
+  /* ── URGENCY STRIP ── */
+  .urgency-strip {
+    background: rgba(255,59,59,0.08);
+    border-top: 1px solid rgba(255,59,59,0.2);
+    border-bottom: 1px solid rgba(255,59,59,0.2);
+    padding: 0.8rem 2rem;
+    text-align: center;
+    font-size: 0.88rem;
+    color: #ff8a8a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    .stat-card:first-child { border-radius: 12px 12px 0 0; }
+    .stat-card:last-child { border-radius: 0 0 12px 12px; }
+    .stats-strip { grid-template-columns: 1fr 1fr; }
+    .float-bar { left: 1rem; right: 1rem; transform: translateX(0) translateY(100px); }
+    .float-bar.visible { transform: translateX(0) translateY(0); }
+  }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-<header>
-  <div class="logo">Ad Recovery</div>
-  <div class="nav">
-    <a href="#">Home</a>
-    <a href="#">How it works</a>
-    <a href="#">Results</a>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="logo-dot"></div>
+    Ad Recovery
   </div>
-</header>
+  <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="nav-cta">Build My System →</a>
+</nav>
+
+<!-- URGENCY STRIP -->
+<div class="urgency-strip" style="margin-top:64px;">
+  ⚠ Every day without a system = money burned. Most ads fail within 72 hours of launch.
+</div>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Stop Losing Money on Ads</h1>
-  <p>Your ads are not the problem. Your system is.</p>
+  <div class="hero-glow"></div>
 
-  <a class="cta" href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca">
-    See the system
-  </a>
-</section>
+  <div class="hero-badge">
+    <div class="badge-blink"></div>
+    The Ads Are Not Your Problem
+  </div>
 
-<!-- PROBLEM -->
-<section class="section">
-  <h2>Why most ads fail</h2>
+  <h1>
+    Your ads are<br>
+    <span class="strike">losing money</span><br>
+    <span class="highlight">because you have no system.</span>
+  </h1>
 
-  <div class="grid">
-    <div class="card">
-      <h3>No funnel</h3>
-      <p>Traffic comes… but there is no structured path to convert.</p>
-    </div>
+  <p class="hero-sub">
+    Traffic without a funnel is like pouring water into a bucket full of holes. Fix the system first. Then scale.
+  </p>
 
-    <div class="card">
-      <h3>No follow-up</h3>
-      <p>Visitors leave and never come back.</p>
-    </div>
+  <div class="hero-actions">
+    <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="btn-primary">
+      Fix My Ad System →
+    </a>
+    <a href="#how" class="btn-ghost">
+      See how it works ↓
+    </a>
+  </div>
 
-    <div class="card">
-      <h3>Too many tools</h3>
-      <p>Costs go up before profit even starts.</p>
-    </div>
+  <div class="hero-trust">
+    <div class="trust-item"><span class="trust-icon">✓</span> No tech skills needed</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> One tool for everything</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> Email + funnel + checkout</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> Free plan available</div>
   </div>
 </section>
 
-<!-- TESTIMONIAL (REAL STYLE, NOT FAKE) -->
-<section class="section">
-  <h2>What marketers are saying</h2>
-
-  <div class="testimonial">
-    “I spent money and learned nothing.”
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">📉 Average ROAS without a funnel: <span>0.4×</span></div>
+    <div class="ticker-item">💸 Ad spend wasted globally per day: <span>$68M+</span></div>
+    <div class="ticker-item">📬 Email follow-up boosts revenue by <span>+320%</span></div>
+    <div class="ticker-item">🔁 Avg visitor leaves in <span>8 seconds</span> without a hook</div>
+    <div class="ticker-item">📈 Marketers with funnels convert <span>3.5× more</span></div>
+    <div class="ticker-item">⚡ Systeme.io replaces <span>6+ tools</span> in one dashboard</div>
+    <!-- duplicate for infinite loop -->
+    <div class="ticker-item">📉 Average ROAS without a funnel: <span>0.4×</span></div>
+    <div class="ticker-item">💸 Ad spend wasted globally per day: <span>$68M+</span></div>
+    <div class="ticker-item">📬 Email follow-up boosts revenue by <span>+320%</span></div>
+    <div class="ticker-item">🔁 Avg visitor leaves in <span>8 seconds</span> without a hook</div>
+    <div class="ticker-item">📈 Marketers with funnels convert <span>3.5× more</span></div>
+    <div class="ticker-item">⚡ Systeme.io replaces <span>6+ tools</span> in one dashboard</div>
   </div>
-
-  <div class="testimonial">
-    “Ads keep running but results are inconsistent.”
-  </div>
-
-  <div class="testimonial">
-    “Too many tools, too much cost, no clear system.”
-  </div>
-</section>
-
-<!-- COMPARISON -->
-<section class="section">
-  <h2>Before vs After</h2>
-
-  <div class="compare">
-
-    <div class="card bad">
-      <h3>Before</h3>
-      <ul>
-        <li>Random landing pages</li>
-        <li>No email follow-up</li>
-        <li>Multiple subscriptions</li>
-        <li>No clear sales flow</li>
-      </ul>
-    </div>
-
-    <div class="card good">
-      <h3>After</h3>
-      <ul>
-        <li>Clear funnel</li>
-        <li>Email automation</li>
-        <li>Simple checkout</li>
-        <li>One system</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section">
-  <h2>How it works</h2>
-
-  <div class="grid">
-    <div class="card">
-      <h3>1. Build funnel</h3>
-      <p>Create a simple path from click to sale.</p>
-    </div>
-
-    <div class="card">
-      <h3>2. Capture leads</h3>
-      <p>Collect emails instead of losing traffic.</p>
-    </div>
-
-    <div class="card">
-      <h3>3. Follow up</h3>
-      <p>Turn visitors into buyers automatically.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="section hero">
-  <h2>Start fixing your system</h2>
-
-  <a class="cta" href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca">
-    Build your system
-  </a>
-</section>
-
-<footer>
-  This page may contain affiliate links.
-</footer>
-
 </div>
 
+<!-- STATS -->
+<div class="stats-strip reveal">
+  <div class="stat-card">
+    <div class="stat-number" data-target="76">0</div>
+    <div class="stat-label">% of ad spend wasted without a funnel</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" data-target="320" data-suffix="%">0</div>
+    <div class="stat-label">revenue lift with email automation</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" data-target="6" data-suffix="×">0</div>
+    <div class="stat-label">tools replaced by one system</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" data-target="48" data-suffix="h">0</div>
+    <div class="stat-label">to build and launch your first funnel</div>
+  </div>
+</div>
+
+<!-- PROBLEM SECTION -->
+<section class="section reveal">
+  <div class="section-label">The Real Problem</div>
+  <h2 class="section-title">Why 94% of ads<br>never become profit</h2>
+  <p class="section-sub">It's not your creative. It's not your budget. It's what happens AFTER the click.</p>
+
+  <div class="problems-grid">
+    <div class="problem-card">
+      <span class="problem-icon">🕳️</span>
+      <h3>Traffic with nowhere to go</h3>
+      <p>You pay for every click, but there's no structured path guiding visitors from interest to purchase. They land, they leave.</p>
+      <div class="problem-cost">💸 Costs: 60–80% of your budget</div>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">👻</span>
+      <h3>Visitors vanish forever</h3>
+      <p>97% of people who visit your page aren't ready to buy. Without follow-up email sequences, you lose them permanently.</p>
+      <div class="problem-cost">💸 Costs: every retargeting dollar</div>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">🧩</span>
+      <h3>Tool chaos = cost chaos</h3>
+      <p>Juggling 5+ subscriptions (page builder, email, CRM, checkout, courses) before you've made your first dollar? The math never works.</p>
+      <div class="problem-cost">💸 Costs: $300–800/mo before ROI</div>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">🎯</span>
+      <h3>Testing without a system</h3>
+      <p>Changing ad creatives won't fix a broken funnel. You're optimizing the wrong variable and burning budget proving it.</p>
+      <div class="problem-cost">💸 Costs: months of wasted tests</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<div class="compare-section">
+  <div class="compare-inner">
+    <div style="text-align:center;">
+      <div class="section-label orange" style="margin:0 auto 1rem;">Transformation</div>
+      <h2 class="section-title">Before the system.<br>After the system.</h2>
+    </div>
+
+    <div class="compare-grid reveal">
+      <div class="compare-col">
+        <div class="compare-head before">✕ Before</div>
+        <ul class="compare-list">
+          <li><span class="icon" style="color:var(--red)">✕</span> Random landing pages with no conversion goal</li>
+          <li><span class="icon" style="color:var(--red)">✕</span> No email capture — traffic disappears forever</li>
+          <li><span class="icon" style="color:var(--red)">✕</span> 5+ expensive tools duct-taped together</li>
+          <li><span class="icon" style="color:var(--red)">✕</span> Manual follow-up (or none at all)</li>
+          <li><span class="icon" style="color:var(--red)">✕</span> No upsells — you earn once per buyer</li>
+          <li><span class="icon" style="color:var(--red)">✕</span> Ads bleeding money with no insight why</li>
+        </ul>
+      </div>
+
+      <div class="compare-divider">
+        <div class="vs-badge">VS</div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-head after">✓ After</div>
+        <ul class="compare-list after">
+          <li><span class="icon" style="color:var(--green)">✓</span> Optimized funnel: click → lead → sale</li>
+          <li><span class="icon" style="color:var(--green)">✓</span> Automated email sequences running 24/7</li>
+          <li><span class="icon" style="color:var(--green)">✓</span> One platform: funnel + email + checkout</li>
+          <li><span class="icon" style="color:var(--green)">✓</span> Automated follow-up — no manual work</li>
+          <li><span class="icon" style="color:var(--green)">✓</span> Order bumps & upsells built in</li>
+          <li><span class="icon" style="color:var(--green)">✓</span> Clear data → profitable ad decisions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-label green">How It Works</div>
+  <h2 class="section-title">3 steps to turn<br>clicks into customers</h2>
+  <p class="section-sub">Built on Systeme.io — the all-in-one platform that replaces every tool in your stack.</p>
+
+  <div class="steps-grid reveal">
+    <div class="step-card">
+      <div class="step-num">Step 01</div>
+      <h3>Build your funnel</h3>
+      <p>Create a clean, focused path from your ad to a sale. No distractions. Every page has one job: move the visitor forward.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 02</div>
+      <h3>Capture every lead</h3>
+      <p>Instead of watching visitors bounce, collect their email. Now you own the relationship — regardless of what happens with your ads.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 03</div>
+      <h3>Automate follow-up</h3>
+      <p>A proven email sequence does the selling for you — nurturing, educating, and converting while you focus on scaling traffic.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 04</div>
+      <h3>Scale what works</h3>
+      <p>With a system converting consistently, you finally have data to spend confidently. Double down on winners. Kill what doesn't.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials-section">
+  <div class="testimonials-inner">
+    <div style="text-align:center;">
+      <div class="section-label green" style="margin: 0 auto 1rem;">Real Results</div>
+      <h2 class="section-title">What marketers say<br>after fixing their system</h2>
+    </div>
+
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">I was spending $1,200/month on ads and getting maybe 2-3 sales. After building a proper funnel, the same budget generated 14 sales in the first month. The system did the work I never knew was missing.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JR</div>
+          <div class="author-info">
+            <div class="name">James R.</div>
+            <div class="role">Digital Product Creator</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">I spent years thinking my ads were terrible. Turns out I had no funnel, no email list, and no follow-up. One simple sequence brought back 22% of people who left without buying. That's pure recovered revenue.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SC</div>
+          <div class="author-info">
+            <div class="name">Sarah C.</div>
+            <div class="role">E-commerce Founder</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">I was paying for 7 different tools. Systeme.io replaced all of them and my monthly overhead dropped from $490 to $27. That alone made everything profitable before I even improved conversions.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MA</div>
+          <div class="author-info">
+            <div class="name">Marcus A.</div>
+            <div class="role">Affiliate Marketer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI CALCULATOR -->
+<div class="calculator-section">
+  <div class="calculator-inner">
+    <div style="text-align:center;">
+      <div class="section-label orange" style="margin: 0 auto 1rem;">ROI Calculator</div>
+      <h2 class="section-title">How much is your<br>broken system costing you?</h2>
+      <p class="section-sub" style="margin: 1rem auto 0;">Plug in your numbers. The math is sobering.</p>
+    </div>
+
+    <div class="calc-card reveal">
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Monthly Ad Spend ($)</label>
+          <input type="number" id="ad-spend" value="500" min="0" step="50">
+        </div>
+        <div class="calc-field">
+          <label>Current Conversion Rate (%)</label>
+          <input type="number" id="conv-rate" value="1.2" min="0" max="100" step="0.1">
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Average Order Value ($)</label>
+          <input type="number" id="aov" value="47" min="0" step="1">
+        </div>
+        <div class="calc-field">
+          <label>Monthly Visitors</label>
+          <input type="number" id="visitors" value="2000" min="0" step="100">
+        </div>
+      </div>
+
+      <div class="calc-result" id="calc-result">
+        <div class="result-item">
+          <div class="result-label">Monthly Revenue (now)</div>
+          <div class="result-value loss" id="res-now">$0</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Revenue with 3.5× funnel lift</div>
+          <div class="result-value" id="res-after">$0</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Revenue left on the table</div>
+          <div class="result-value loss" id="res-lost">$0</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Break-even in days</div>
+          <div class="result-value" id="res-breakeven">0d</div>
+        </div>
+      </div>
+
+      <p style="font-size:0.8rem; color:var(--muted); margin-top:1rem; text-align:center;">
+        * 3.5× conversion lift is the reported average for structured funnels vs no funnel. Results vary.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="section-label green" style="margin:0 auto 1.5rem;">Start Today</div>
+    <h2>Stop guessing.<br>Start <span style="color:var(--green)">converting.</span></h2>
+    <p>
+      Every day you run ads without a system is a day your budget subsidizes someone else's funnel. The fix takes less time than you think.
+    </p>
+    <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="cta-btn">
+      Build My System — It's Free →
+    </a>
+    <div class="cta-note">
+      <span>✓ Free plan available</span>
+      <span>✓ No credit card required</span>
+      <span>✓ Launch in 48 hours</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Ad Recovery System · Built to help you stop losing ad money · 
+  <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank">Get Started Free</a></p>
+  <p style="margin-top:0.5rem;">This page contains affiliate links. We may earn a commission if you sign up through our link — at no extra cost to you.</p>
+</footer>
+
+<!-- FLOATING BAR -->
+<div class="float-bar" id="float-bar">
+  <div class="float-bar-text"><strong>Still losing money?</strong> Fix the system free →</div>
+  <a href="https://systeme.io/?sa=sa0270430435e2800c44607da80498048135d782ca" target="_blank" class="float-bar-btn">Start Free</a>
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+
+  // Calculator
+  function calcROI() {
+    const spend = parseFloat(document.getElementById('ad-spend').value) || 0;
+    const rate = parseFloat(document.getElementById('conv-rate').value) / 100 || 0;
+    const aov = parseFloat(document.getElementById('aov').value) || 0;
+    const visitors = parseFloat(document.getElementById('visitors').value) || 0;
+
+    const now = visitors * rate * aov;
+    const after = visitors * (rate * 3.5) * aov;
+    const lost = after - now;
+    const systemeMonthly = 27;
+    const breakeven = lost > 0 ? Math.ceil((systemeMonthly / lost) * 30) : 0;
+
+    document.getElementById('res-now').textContent = '$' + Math.round(now).toLocaleString();
+    document.getElementById('res-after').textContent = '$' + Math.round(after).toLocaleString();
+    document.getElementById('res-lost').textContent = '$' + Math.round(lost).toLocaleString();
+    document.getElementById('res-breakeven').textContent = breakeven + 'd';
+  }
+
+  document.querySelectorAll('.calc-field input').forEach(input => {
+    input.addEventListener('input', calcROI);
+  });
+  calcROI();
+
+  // Floating bar on scroll
+  const floatBar = document.getElementById('float-bar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 600) {
+      floatBar.classList.add('visible');
+    } else {
+      floatBar.classList.remove('visible');
+    }
+  });
+
+  // Navbar shrink on scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.style.padding = '0.8rem 2rem';
+    } else {
+      navbar.style.padding = '1.2rem 2rem';
+    }
+  });
+</script>
 </body>
 </html>
